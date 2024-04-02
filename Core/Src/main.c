@@ -110,7 +110,9 @@ int main(void)
 	HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
 	HAL_Delay(500);
 	Temp *= 1000;
-	sprintf(buff,"sicaklik= %d\n",(int)Temp);
+	sprintf(buff,"sicaklik= %d.%d\n",(int)Temp/1000,(int)Temp%1000);
+	HAL_UART_Transmit(&huart2, buff, strlen(buff), 10000);
+	sprintf(buff,"basinc = %d.%d\n",(int)Press/100,(int)Press%100);
 	HAL_UART_Transmit(&huart2, buff, strlen(buff), 10000);
   }
   /* USER CODE END 3 */

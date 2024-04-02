@@ -16,7 +16,7 @@ extern float Temp, Press;
 
 uint8_t chipID;
 
-uint8_t	tRaw, pRaw;
+uint32_t	tRaw, pRaw;
 
 unsigned short		dig_T1, dig_P1;
 
