@@ -108,7 +108,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 	BMP280_Measure();
 	HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-	HAL_Delay(500);
+	HAL_Delay(50);
 	Temp *= 1000;
 	sprintf(buff,"sicaklik= %d.%d\n",(int)Temp/1000,(int)Temp%1000);
 	HAL_UART_Transmit(&huart2, buff, strlen(buff), 10000);
@@ -180,7 +180,7 @@ static void MX_I2C1_Init(void)
 
   /* USER CODE END I2C1_Init 1 */
   hi2c1.Instance = I2C1;
-  hi2c1.Init.ClockSpeed = 100000;
+  hi2c1.Init.ClockSpeed = 400000;
   hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
   hi2c1.Init.OwnAddress1 = 0;
   hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;

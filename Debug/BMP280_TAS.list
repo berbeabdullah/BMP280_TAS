@@ -2456,91 +2456,92 @@ int main(void)
  8001a02:	2120      	movs	r1, #32
  8001a04:	4838      	ldr	r0, [pc, #224]	@ (8001ae8 <main+0x114>)
  8001a06:	f000 feb8 	bl	800277a <HAL_GPIO_TogglePin>
-	HAL_Delay(500);
- 8001a0a:	f44f 70fa 	mov.w	r0, #500	@ 0x1f4
- 8001a0e:	f000 fc0d 	bl	800222c <HAL_Delay>
+	HAL_Delay(50);
+ 8001a0a:	2032      	movs	r0, #50	@ 0x32
+ 8001a0c:	f000 fc0e 	bl	800222c <HAL_Delay>
 	Temp *= 1000;
- 8001a12:	4b36      	ldr	r3, [pc, #216]	@ (8001aec <main+0x118>)
- 8001a14:	edd3 7a00 	vldr	s15, [r3]
- 8001a18:	ed9f 7a35 	vldr	s14, [pc, #212]	@ 8001af0 <main+0x11c>
- 8001a1c:	ee67 7a87 	vmul.f32	s15, s15, s14
- 8001a20:	4b32      	ldr	r3, [pc, #200]	@ (8001aec <main+0x118>)
- 8001a22:	edc3 7a00 	vstr	s15, [r3]
+ 8001a10:	4b36      	ldr	r3, [pc, #216]	@ (8001aec <main+0x118>)
+ 8001a12:	edd3 7a00 	vldr	s15, [r3]
+ 8001a16:	ed9f 7a36 	vldr	s14, [pc, #216]	@ 8001af0 <main+0x11c>
+ 8001a1a:	ee67 7a87 	vmul.f32	s15, s15, s14
+ 8001a1e:	4b33      	ldr	r3, [pc, #204]	@ (8001aec <main+0x118>)
+ 8001a20:	edc3 7a00 	vstr	s15, [r3]
 	sprintf(buff,"sicaklik= %d.%d\n",(int)Temp/1000,(int)Temp%1000);
- 8001a26:	4b31      	ldr	r3, [pc, #196]	@ (8001aec <main+0x118>)
- 8001a28:	edd3 7a00 	vldr	s15, [r3]
- 8001a2c:	eefd 7ae7 	vcvt.s32.f32	s15, s15
- 8001a30:	ee17 1a90 	vmov	r1, s15
- 8001a34:	4b2f      	ldr	r3, [pc, #188]	@ (8001af4 <main+0x120>)
- 8001a36:	fb83 2301 	smull	r2, r3, r3, r1
- 8001a3a:	119a      	asrs	r2, r3, #6
- 8001a3c:	17cb      	asrs	r3, r1, #31
- 8001a3e:	1ad4      	subs	r4, r2, r3
- 8001a40:	4b2a      	ldr	r3, [pc, #168]	@ (8001aec <main+0x118>)
- 8001a42:	edd3 7a00 	vldr	s15, [r3]
- 8001a46:	eefd 7ae7 	vcvt.s32.f32	s15, s15
- 8001a4a:	ee17 2a90 	vmov	r2, s15
- 8001a4e:	4b29      	ldr	r3, [pc, #164]	@ (8001af4 <main+0x120>)
- 8001a50:	fb83 1302 	smull	r1, r3, r3, r2
- 8001a54:	1199      	asrs	r1, r3, #6
- 8001a56:	17d3      	asrs	r3, r2, #31
- 8001a58:	1acb      	subs	r3, r1, r3
- 8001a5a:	f44f 717a 	mov.w	r1, #1000	@ 0x3e8
- 8001a5e:	fb01 f303 	mul.w	r3, r1, r3
- 8001a62:	1ad3      	subs	r3, r2, r3
- 8001a64:	1d38      	adds	r0, r7, #4
- 8001a66:	4622      	mov	r2, r4
- 8001a68:	4923      	ldr	r1, [pc, #140]	@ (8001af8 <main+0x124>)
- 8001a6a:	f003 fc83 	bl	8005374 <siprintf>
+ 8001a24:	4b31      	ldr	r3, [pc, #196]	@ (8001aec <main+0x118>)
+ 8001a26:	edd3 7a00 	vldr	s15, [r3]
+ 8001a2a:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+ 8001a2e:	ee17 1a90 	vmov	r1, s15
+ 8001a32:	4b30      	ldr	r3, [pc, #192]	@ (8001af4 <main+0x120>)
+ 8001a34:	fb83 2301 	smull	r2, r3, r3, r1
+ 8001a38:	119a      	asrs	r2, r3, #6
+ 8001a3a:	17cb      	asrs	r3, r1, #31
+ 8001a3c:	1ad4      	subs	r4, r2, r3
+ 8001a3e:	4b2b      	ldr	r3, [pc, #172]	@ (8001aec <main+0x118>)
+ 8001a40:	edd3 7a00 	vldr	s15, [r3]
+ 8001a44:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+ 8001a48:	ee17 2a90 	vmov	r2, s15
+ 8001a4c:	4b29      	ldr	r3, [pc, #164]	@ (8001af4 <main+0x120>)
+ 8001a4e:	fb83 1302 	smull	r1, r3, r3, r2
+ 8001a52:	1199      	asrs	r1, r3, #6
+ 8001a54:	17d3      	asrs	r3, r2, #31
+ 8001a56:	1acb      	subs	r3, r1, r3
+ 8001a58:	f44f 717a 	mov.w	r1, #1000	@ 0x3e8
+ 8001a5c:	fb01 f303 	mul.w	r3, r1, r3
+ 8001a60:	1ad3      	subs	r3, r2, r3
+ 8001a62:	1d38      	adds	r0, r7, #4
+ 8001a64:	4622      	mov	r2, r4
+ 8001a66:	4924      	ldr	r1, [pc, #144]	@ (8001af8 <main+0x124>)
+ 8001a68:	f003 fc84 	bl	8005374 <siprintf>
 	HAL_UART_Transmit(&huart2, buff, strlen(buff), 10000);
- 8001a6e:	1d3b      	adds	r3, r7, #4
- 8001a70:	4618      	mov	r0, r3
- 8001a72:	f7fe fc05 	bl	8000280 <strlen>
- 8001a76:	4603      	mov	r3, r0
- 8001a78:	b29a      	uxth	r2, r3
- 8001a7a:	1d39      	adds	r1, r7, #4
- 8001a7c:	f242 7310 	movw	r3, #10000	@ 0x2710
- 8001a80:	481e      	ldr	r0, [pc, #120]	@ (8001afc <main+0x128>)
- 8001a82:	f002 fba1 	bl	80041c8 <HAL_UART_Transmit>
+ 8001a6c:	1d3b      	adds	r3, r7, #4
+ 8001a6e:	4618      	mov	r0, r3
+ 8001a70:	f7fe fc06 	bl	8000280 <strlen>
+ 8001a74:	4603      	mov	r3, r0
+ 8001a76:	b29a      	uxth	r2, r3
+ 8001a78:	1d39      	adds	r1, r7, #4
+ 8001a7a:	f242 7310 	movw	r3, #10000	@ 0x2710
+ 8001a7e:	481f      	ldr	r0, [pc, #124]	@ (8001afc <main+0x128>)
+ 8001a80:	f002 fba2 	bl	80041c8 <HAL_UART_Transmit>
 	sprintf(buff,"basinc = %d.%d\n",(int)Press/100,(int)Press%100);
- 8001a86:	4b1e      	ldr	r3, [pc, #120]	@ (8001b00 <main+0x12c>)
- 8001a88:	edd3 7a00 	vldr	s15, [r3]
- 8001a8c:	eefd 7ae7 	vcvt.s32.f32	s15, s15
- 8001a90:	ee17 1a90 	vmov	r1, s15
- 8001a94:	4b1b      	ldr	r3, [pc, #108]	@ (8001b04 <main+0x130>)
- 8001a96:	fb83 2301 	smull	r2, r3, r3, r1
- 8001a9a:	115a      	asrs	r2, r3, #5
- 8001a9c:	17cb      	asrs	r3, r1, #31
- 8001a9e:	1ad4      	subs	r4, r2, r3
- 8001aa0:	4b17      	ldr	r3, [pc, #92]	@ (8001b00 <main+0x12c>)
- 8001aa2:	edd3 7a00 	vldr	s15, [r3]
- 8001aa6:	eefd 7ae7 	vcvt.s32.f32	s15, s15
- 8001aaa:	ee17 2a90 	vmov	r2, s15
- 8001aae:	4b15      	ldr	r3, [pc, #84]	@ (8001b04 <main+0x130>)
- 8001ab0:	fb83 1302 	smull	r1, r3, r3, r2
- 8001ab4:	1159      	asrs	r1, r3, #5
- 8001ab6:	17d3      	asrs	r3, r2, #31
- 8001ab8:	1acb      	subs	r3, r1, r3
- 8001aba:	2164      	movs	r1, #100	@ 0x64
- 8001abc:	fb01 f303 	mul.w	r3, r1, r3
- 8001ac0:	1ad3      	subs	r3, r2, r3
- 8001ac2:	1d38      	adds	r0, r7, #4
- 8001ac4:	4622      	mov	r2, r4
- 8001ac6:	4910      	ldr	r1, [pc, #64]	@ (8001b08 <main+0x134>)
- 8001ac8:	f003 fc54 	bl	8005374 <siprintf>
+ 8001a84:	4b1e      	ldr	r3, [pc, #120]	@ (8001b00 <main+0x12c>)
+ 8001a86:	edd3 7a00 	vldr	s15, [r3]
+ 8001a8a:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+ 8001a8e:	ee17 1a90 	vmov	r1, s15
+ 8001a92:	4b1c      	ldr	r3, [pc, #112]	@ (8001b04 <main+0x130>)
+ 8001a94:	fb83 2301 	smull	r2, r3, r3, r1
+ 8001a98:	115a      	asrs	r2, r3, #5
+ 8001a9a:	17cb      	asrs	r3, r1, #31
+ 8001a9c:	1ad4      	subs	r4, r2, r3
+ 8001a9e:	4b18      	ldr	r3, [pc, #96]	@ (8001b00 <main+0x12c>)
+ 8001aa0:	edd3 7a00 	vldr	s15, [r3]
+ 8001aa4:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+ 8001aa8:	ee17 2a90 	vmov	r2, s15
+ 8001aac:	4b15      	ldr	r3, [pc, #84]	@ (8001b04 <main+0x130>)
+ 8001aae:	fb83 1302 	smull	r1, r3, r3, r2
+ 8001ab2:	1159      	asrs	r1, r3, #5
+ 8001ab4:	17d3      	asrs	r3, r2, #31
+ 8001ab6:	1acb      	subs	r3, r1, r3
+ 8001ab8:	2164      	movs	r1, #100	@ 0x64
+ 8001aba:	fb01 f303 	mul.w	r3, r1, r3
+ 8001abe:	1ad3      	subs	r3, r2, r3
+ 8001ac0:	1d38      	adds	r0, r7, #4
+ 8001ac2:	4622      	mov	r2, r4
+ 8001ac4:	4910      	ldr	r1, [pc, #64]	@ (8001b08 <main+0x134>)
+ 8001ac6:	f003 fc55 	bl	8005374 <siprintf>
 	HAL_UART_Transmit(&huart2, buff, strlen(buff), 10000);
- 8001acc:	1d3b      	adds	r3, r7, #4
- 8001ace:	4618      	mov	r0, r3
- 8001ad0:	f7fe fbd6 	bl	8000280 <strlen>
- 8001ad4:	4603      	mov	r3, r0
- 8001ad6:	b29a      	uxth	r2, r3
- 8001ad8:	1d39      	adds	r1, r7, #4
- 8001ada:	f242 7310 	movw	r3, #10000	@ 0x2710
- 8001ade:	4807      	ldr	r0, [pc, #28]	@ (8001afc <main+0x128>)
- 8001ae0:	f002 fb72 	bl	80041c8 <HAL_UART_Transmit>
+ 8001aca:	1d3b      	adds	r3, r7, #4
+ 8001acc:	4618      	mov	r0, r3
+ 8001ace:	f7fe fbd7 	bl	8000280 <strlen>
+ 8001ad2:	4603      	mov	r3, r0
+ 8001ad4:	b29a      	uxth	r2, r3
+ 8001ad6:	1d39      	adds	r1, r7, #4
+ 8001ad8:	f242 7310 	movw	r3, #10000	@ 0x2710
+ 8001adc:	4807      	ldr	r0, [pc, #28]	@ (8001afc <main+0x128>)
+ 8001ade:	f002 fb73 	bl	80041c8 <HAL_UART_Transmit>
 	BMP280_Measure();
- 8001ae4:	bf00      	nop
- 8001ae6:	e78a      	b.n	80019fe <main+0x2a>
+ 8001ae2:	bf00      	nop
+ 8001ae4:	e78b      	b.n	80019fe <main+0x2a>
+ 8001ae6:	bf00      	nop
  8001ae8:	40020000 	.word	0x40020000
  8001aec:	200002b4 	.word	0x200002b4
  8001af0:	447a0000 	.word	0x447a0000
@@ -2704,7 +2705,7 @@ static void MX_I2C1_Init(void)
  8001be0:	4b12      	ldr	r3, [pc, #72]	@ (8001c2c <MX_I2C1_Init+0x50>)
  8001be2:	4a13      	ldr	r2, [pc, #76]	@ (8001c30 <MX_I2C1_Init+0x54>)
  8001be4:	601a      	str	r2, [r3, #0]
-  hi2c1.Init.ClockSpeed = 100000;
+  hi2c1.Init.ClockSpeed = 400000;
  8001be6:	4b11      	ldr	r3, [pc, #68]	@ (8001c2c <MX_I2C1_Init+0x50>)
  8001be8:	4a12      	ldr	r2, [pc, #72]	@ (8001c34 <MX_I2C1_Init+0x58>)
  8001bea:	605a      	str	r2, [r3, #4]
@@ -2755,7 +2756,7 @@ static void MX_I2C1_Init(void)
  8001c2a:	bd80      	pop	{r7, pc}
  8001c2c:	20000218 	.word	0x20000218
  8001c30:	40005400 	.word	0x40005400
- 8001c34:	000186a0 	.word	0x000186a0
+ 8001c34:	00061a80 	.word	0x00061a80
 
 08001c38 <MX_USART2_UART_Init>:
   * @brief USART2 Initialization Function
