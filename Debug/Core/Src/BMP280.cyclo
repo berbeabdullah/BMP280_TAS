@@ -1,7 +1,8 @@
-../Core/Src/BMP280.c:26:6:TrimRead	1
-../Core/Src/BMP280.c:45:5:BMP280_Config	6
-../Core/Src/BMP280.c:85:5:BMP_ReadRaw	2
-../Core/Src/BMP280.c:101:6:BMP280_WakeUp	1
-../Core/Src/BMP280.c:114:9:BMP280_compensate_T_int32	1
-../Core/Src/BMP280.c:124:10:BMP280_compensate_P_int64	2
-../Core/Src/BMP280.c:145:6:BMP280_Measure	4
+../Core/Src/BMP280.c:25:6:TrimRead	1
+../Core/Src/BMP280.c:44:5:BMP280_Config	6
+../Core/Src/BMP280.c:84:5:BMP280_ReadRaw	2
+../Core/Src/BMP280.c:100:6:BMP280_WakeUp	1
+../Core/Src/BMP280.c:113:9:BMP280_compensate_T_int32	1
+../Core/Src/BMP280.c:123:10:BMP280_compensate_P_int64	2
+../Core/Src/BMP280.c:145:7:BMP280_Get_Press	3
+../Core/Src/BMP280.c:158:7:BMP280_Get_Temp	3

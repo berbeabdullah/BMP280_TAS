@@ -56,6 +56,10 @@ extern int BMP_ReadRaw(void);
 
 extern void BMP280_WakeUp(void);
 
+extern float BMP280_Get_Temp(void);
+
+extern float BMP280_Get_Press(void);
+
 extern void BMP280_Measure (void);
 
 

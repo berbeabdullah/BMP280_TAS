@@ -6,13 +6,12 @@
  */
 
 
-#include "bmp280.h"
+#include "BMP280.h"
 
 extern I2C_HandleTypeDef hi2c1;
 #define BMP280_I2C &hi2c1
 #define BMP280_ADDR			0x76<<1 //SDO --> GND ADDR=0X76 / SDO --> VDD ADDR = 0x77
 
-extern float Temp, Press;
 
 uint8_t chipID;
 
@@ -82,7 +81,7 @@ int BMP280_Config (uint8_t osrs_t, uint8_t osrs_p, uint8_t mode, uint8_t t_sb, u
 	return 0;
 }
 
-int BMP_ReadRaw(void)
+int BMP280_ReadRaw(void)
 {
 	uint8_t RawData[6];
 	// check the device id before reading
@@ -142,6 +141,34 @@ uint32_t BMP280_compensate_P_int64(int32_t adc_P)
 	return (uint32_t)p;
 }
 
+
+float BMP280_Get_Press()
+{
+	float Press;
+	if(BMP280_ReadRaw() == 0)
+	{
+		if(pRaw==0x800000)  Press = 0.0;
+		else
+		{
+			Press =(BMP280_compensate_P_int64(pRaw))/256.0;
+		}
+	}
+	return Press;
+}
+float BMP280_Get_Temp()
+{
+	float Temp;
+	if(BMP280_ReadRaw() == 0)
+	{
+		if(tRaw==0x800000)  Temp = 0.0;
+		else
+		{
+			Temp =(BMP280_compensate_T_int32(tRaw))/100.0;
+		}
+	}
+	return Temp;
+}
+/*
 void BMP280_Measure (void)
 {
 	if(BMP_ReadRaw()==0)
@@ -157,11 +184,8 @@ void BMP280_Measure (void)
 			Press = (BMP280_compensate_P_int64 (pRaw))/256.0;
 		}
 	}
-	else
-	{
-		Temp = Press = 31;
-	}
-}
+}arm-none-eabi-gdbarm-none-eabi-gdb
+*/
 
 
 

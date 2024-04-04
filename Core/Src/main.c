@@ -61,7 +61,7 @@ static void MX_I2C1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-float Temp, Press;
+float Temp, Press, tTemp, tPress;
 /* USER CODE END 0 */
 
 /**
@@ -106,13 +106,14 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	BMP280_Measure();
+	tTemp = Temp = BMP280_Get_Temp();
+	tPress = Press = BMP280_Get_Press();
 	HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
 	HAL_Delay(50);
-	Temp *= 1000;
-	sprintf(buff,"sicaklik= %d.%d\n",(int)Temp/1000,(int)Temp%1000);
+	tTemp *= 1000;
+	sprintf(buff,"sicaklik= %d.%d\n",(int)tTemp/1000,(int)tTemp%1000);
 	HAL_UART_Transmit(&huart2, buff, strlen(buff), 10000);
-	sprintf(buff,"basinc = %d.%d\n",(int)Press/100,(int)Press%100);
+	sprintf(buff,"basinc = %d.%d\n",(int)tPress/100,(int)tPress%100);
 	HAL_UART_Transmit(&huart2, buff, strlen(buff), 10000);
   }
   /* USER CODE END 3 */
