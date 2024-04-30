@@ -168,25 +168,6 @@ float BMP280_Get_Temp()
 	}
 	return Temp;
 }
-/*
-void BMP280_Measure (void)
-{
-	if(BMP_ReadRaw()==0)
-	{
-		if(tRaw==0x800000) Temp = 0;
-		else
-		{
-			Temp = (BMP280_compensate_T_int32 (tRaw))/100.0;
-		}
-		if(pRaw==0x800000) Press = 0;
-		else
-		{
-			Press = (BMP280_compensate_P_int64 (pRaw))/256.0;
-		}
-	}
-}arm-none-eabi-gdbarm-none-eabi-gdb
-*/
-
 
 
 
