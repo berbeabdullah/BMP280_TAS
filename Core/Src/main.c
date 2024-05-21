@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "BMP280.h"
+#include "ssd1306.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,6 +70,13 @@ float Calculate_Height (float prs);
 char temp[100];
 char press[100];
 char alt[100];
+char velo[100];
+
+float Preh = 0;
+float Curh = 0;
+float dish = 0;
+float vel, tvel;
+
 /* USER CODE END 0 */
 
 /**
@@ -79,7 +87,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	char buff[100];
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -104,6 +111,7 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
+  ssd1306_Init();
   HAL_TIM_Base_Start_IT(&htim2);
   BMP280_Config(OSRS_2, OSRS_16, MODE_NORMAL, T_SB_0p5, IRR_16);
   /* USER CODE END 2 */
@@ -118,9 +126,21 @@ int main(void)
 	  Press /= 100;
 	  tAlt = Alt = Calculate_Height(Press);
 	  tAlt *= 1000;
-	  sprintf(temp,"\nsicaklik= %d.%d\n",(int)tTemp/1000,(int)tTemp%1000);
-	  sprintf(press,"basinc = %d.%d\n",(int)tPress/100,(int)tPress%100);
-	  sprintf(alt,"yukseklik = %d.%d\n",(int)tAlt/1000,(int)tAlt%1000);
+	  tvel = vel*1000;
+	  sprintf(temp,"temp= %d.%d",(int)tTemp/1000,(int)tTemp%1000);
+	  sprintf(press,"basinc = %d.%d",(int)tPress/100,(int)tPress%100);
+	  sprintf(alt,"yukseklik = %d.%d",(int)tAlt/1000,(int)tAlt%1000);
+	  sprintf(velo,"hiz = %d.%d",(int)tvel/1000,(int)tvel%1000);
+	  ssd1306_Fill(Black);
+	  ssd1306_SetCursor(2,3);
+	  ssd1306_WriteString(temp, Font_7x10, White);
+	  ssd1306_SetCursor(2,15);
+	  ssd1306_WriteString(press, Font_7x10, White);
+	  ssd1306_SetCursor(2,27);
+	  ssd1306_WriteString(alt, Font_7x10, White);
+	  ssd1306_SetCursor(2,39);
+	  ssd1306_WriteString(velo, Font_7x10, White);
+	  ssd1306_UpdateScreen();
 	  HAL_UART_Transmit(&huart2, temp, strlen(temp), 10000);
 	  HAL_UART_Transmit(&huart2, press, strlen(press), 10000);
 	  HAL_UART_Transmit(&huart2, alt, strlen(press), 10000);
@@ -185,7 +205,13 @@ float Calculate_Height (float prs){
 	return  con2*(1-tmp);
 }
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	float x;
 	HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+	x = BMP280_Get_Press();
+	Curh = Calculate_Height(x);
+	dish = Curh - Preh;
+	vel = dish*4;
+	Preh = Curh;
 
 }
 
