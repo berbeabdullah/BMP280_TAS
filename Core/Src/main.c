@@ -25,7 +25,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdbool.h>
 #include <stdio.h>
+#include <math.h>
 #include <string.h>
 #include "BMP280.h"
 #include "ssd1306.h"
@@ -60,7 +62,11 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-float Temp, Press, Alt , tTemp, tPress, tAlt;
+#define INTERVAL 200
+bool BUZ = false;
+uint32_t last_time;
+
+float Temp1, Press1, Alt1;
 float con1 = 0.1902632;
 float con2 = 44330.77;
 float sea_level = 1013.26;
@@ -110,9 +116,11 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   MX_TIM2_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
   ssd1306_Init();
   HAL_TIM_Base_Start_IT(&htim2);
+  HAL_TIM_Base_Start_IT(&htim3);
   BMP280_Config(OSRS_2, OSRS_16, MODE_NORMAL, T_SB_0p5, IRR_16);
   /* USER CODE END 2 */
 
@@ -120,17 +128,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  tTemp = Temp = BMP280_Get_Temp();
-	  tPress = Press = BMP280_Get_Press();
-	  tTemp *= 1000;
-	  Press /= 100;
-	  tAlt = Alt = Calculate_Height(Press);
-	  tAlt *= 1000;
-	  tvel = vel*1000;
-	  sprintf(temp,"temp= %d.%d",(int)tTemp/1000,(int)tTemp%1000);
-	  sprintf(press,"basinc = %d.%d",(int)tPress/100,(int)tPress%100);
-	  sprintf(alt,"yukseklik = %d.%d",(int)tAlt/1000,(int)tAlt%1000);
-	  sprintf(velo,"hiz = %d.%d",(int)tvel/1000,(int)tvel%1000);
+	  Temp1 = BMP280_Get_Temp();
+	  Press1 = BMP280_Get_Press();
+	  Alt1 = Calculate_Height(Press1);
+	  sprintf(temp,"\ntemp= %.2f",Temp1);
+	  sprintf(press,"\nbasinc = %.2f",Press1);
+	  sprintf(alt,"\nyukseklik = %.5f",Alt1);
+	  sprintf(velo,"\nhiz = %.2f",vel);
 	  ssd1306_Fill(Black);
 	  ssd1306_SetCursor(2,3);
 	  ssd1306_WriteString(temp, Font_7x10, White);
@@ -144,8 +148,19 @@ int main(void)
 	  HAL_UART_Transmit(&huart2, temp, strlen(temp), 10000);
 	  HAL_UART_Transmit(&huart2, press, strlen(press), 10000);
 	  HAL_UART_Transmit(&huart2, alt, strlen(press), 10000);
+	  HAL_UART_Transmit(&huart2, velo, strlen(velo), 10000);
+	  if (vel < -1) {
+		  HAL_GPIO_WritePin(BUZZ_GPIO_Port, BUZZ_Pin, 1);
+		  BUZ = false;
+	  }
+	  else if (vel >=0.6) {
+		  BUZ = true;
+	  }
+	  else {
+		  HAL_GPIO_WritePin(BUZZ_GPIO_Port, BUZZ_Pin, 0);
+		  BUZ = false;
+	  }
 
-	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -201,20 +216,24 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 float Calculate_Height (float prs){
-	float tmp = powf((prs/sea_level),con1);
+	float tmp = pow((prs/sea_level),con1);
 	return  con2*(1-tmp);
 }
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	float x;
-	HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-	x = BMP280_Get_Press();
-	Curh = Calculate_Height(x);
-	dish = Curh - Preh;
-	vel = dish*4;
-	Preh = Curh;
+		if (htim->Instance==TIM2) {
+			Curh = Alt1;
+			dish = Curh - Preh;
+			vel = dish/0.25;
+			Preh = Curh;
+		}
+		if (htim->Instance==TIM3) {
+			HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+			if (BUZ) {
+				HAL_GPIO_TogglePin(BUZZ_GPIO_Port, BUZZ_Pin);
+			}
 
+		}
 }
-
 /* USER CODE END 4 */
 
 /**

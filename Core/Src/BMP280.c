@@ -150,7 +150,7 @@ float BMP280_Get_Press()
 		if(pRaw==0x800000)  Press = 0.0;
 		else
 		{
-			Press =(BMP280_compensate_P_int64(pRaw))/256.0;
+			Press =(BMP280_compensate_P_int64(pRaw))/25600.0;
 		}
 	}
 	return Press;
