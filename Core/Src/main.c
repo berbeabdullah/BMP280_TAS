@@ -122,6 +122,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim3);
   BMP280_Config(OSRS_2, OSRS_16, MODE_NORMAL, T_SB_0p5, IRR_16);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -131,20 +132,21 @@ int main(void)
 	  Temp1 = BMP280_Get_Temp();
 	  Press1 = BMP280_Get_Press();
 	  Alt1 = Calculate_Height(Press1);
-	  sprintf(temp,"\ntemp= %.2f",Temp1);
-	  sprintf(press,"\nbasinc = %.2f",Press1);
-	  sprintf(alt,"\nyukseklik = %.5f",Alt1);
-	  sprintf(velo,"\nhiz = %.2f",vel);
+	  sprintf(temp,"sicaklik= %.2f",Temp1);
+	  sprintf(press,"basinc = %.2f",Press1);
+	  sprintf(alt,"yukseklik = %.5f",Alt1);
+	  sprintf(velo,"hiz = %.2f",vel);
 	  ssd1306_Fill(Black);
-	  ssd1306_SetCursor(2,3);
+	  ssd1306_SetCursor(2,8);
 	  ssd1306_WriteString(temp, Font_7x10, White);
-	  ssd1306_SetCursor(2,15);
+	  ssd1306_SetCursor(2,20);
 	  ssd1306_WriteString(press, Font_7x10, White);
-	  ssd1306_SetCursor(2,27);
+	  ssd1306_SetCursor(2,32);
 	  ssd1306_WriteString(alt, Font_7x10, White);
-	  ssd1306_SetCursor(2,39);
+	  ssd1306_SetCursor(2,44);
 	  ssd1306_WriteString(velo, Font_7x10, White);
 	  ssd1306_UpdateScreen();
+	  //ssd1306_TestAll();
 	  HAL_UART_Transmit(&huart2, temp, strlen(temp), 10000);
 	  HAL_UART_Transmit(&huart2, press, strlen(press), 10000);
 	  HAL_UART_Transmit(&huart2, alt, strlen(press), 10000);
